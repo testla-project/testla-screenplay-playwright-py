@@ -13,13 +13,13 @@ class Element(Question):
         self.selector = selector
         
 
-    def answered_by(self, actor) -> bool:
+    def answered_by(self, actor: Actor) -> bool:
         if self.mode == 'visible':
             # if the ability method is not the expected result there will be an exception
-            return BrowseTheWeb.As(actor).check_visibility_state(self.selector, 'visible' if self.check_mode is 'to_be' else 'hidden')
+            return BrowseTheWeb.As(actor).check_visibility_state(self.selector, 'visible' if self.check_mode == 'to_be' else 'hidden')
         if self.mode == 'enabled':
             # if the ability method is not the expected result there will be an exception
-            return BrowseTheWeb.As(actor).check_enabled_state(self.selector, 'enabled' if self.check_mode is 'to_be' else 'disabled')
+            return BrowseTheWeb.As(actor).check_enabled_state(self.selector, 'enabled' if self.check_mode == 'to_be' else 'disabled')
         raise RuntimeError('Unknown mode: Element.answered_by')
 
     @staticmethod

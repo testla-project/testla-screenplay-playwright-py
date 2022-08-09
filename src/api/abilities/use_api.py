@@ -30,7 +30,7 @@ class UseAPI(Ability):
         """Get the request context object."""
         return self.request_context
 
-    def send_request(self, method: RequestMethod, url: str, headers: Dict[str, str] | None = None, data: Any | bytes | str = None, response_format: ResponseBodyFormat | None = None) -> Response:
+    def send_request(self, method: RequestMethod, url: str, headers: Dict[str, str] | None = None, data: object | None = None, response_format: ResponseBodyFormat | None = None) -> Response:
         # track time before sending request
         start_time = time()
 
