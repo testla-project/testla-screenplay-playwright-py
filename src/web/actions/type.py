@@ -1,22 +1,22 @@
-# from @testla/screenplay import Action, Actor
-from abilities.browse_the_web import BrowseTheWeb
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
+
 
 class Type(Action):
     """Action Class. Type specified input into an element specified by a selector."""
 
-    def __init__(self, selector: str, input: str):
-        super.__init__()
+    def __init__(self, selector: str, inp: str):
         self.selector = selector
-        self.input = input
+        self.inp = inp
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).type(self.selector, self.input)
+        return BrowseTheWeb.As(actor).type(self.selector, self.inp)
 
     @staticmethod
-    def In(selector: str, input: str) -> "Type":
+    def In(selector: str, inp: str) -> "Type":
         """Finds the specified selector and type in the given input.
 
         :param selector: the selector.
-        :param input: the input.
+        :param inp: the input.
         """
-        return Type(selector, input)
+        return Type(selector, inp)

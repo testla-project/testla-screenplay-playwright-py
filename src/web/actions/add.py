@@ -1,11 +1,13 @@
-# from @testla/screenplay import Action, Actor
-from abilities.browse_the_web import BrowseTheWeb
+from typing import List
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
+from playwright.sync_api import Cookie
+
 
 class Add(Action):
     """Action Class. Add Cookies to the Browser."""
 
     def __init__(self, cookies: List[Cookie]):
-        super.__init__()
         self.cookies = cookies
 
     def perform_as(self, actor: Actor) -> None:

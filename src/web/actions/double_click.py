@@ -1,11 +1,11 @@
-# from @testla/screenplay import Action, Actor
-from abilities.browse_the_web import BrowseTheWeb
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
+
 
 class DoubleClick(Action):
     """Action Class. Double Click on an element specified by a selector string."""
 
     def __init__(self, selector: str):
-        super.__init__()
         self.selector = selector
 
     def perform_as(self, actor: Actor) -> None:

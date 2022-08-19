@@ -3,14 +3,13 @@ from typing import Any, Dict, Literal
 from playwright.sync_api import APIRequestContext, APIResponse, expect
 from sqlalchemy import true
 from src.api.types import RequestMethod, Response, ResponseBodyFormat
-# from @testla/screenplay import Ability, Actor
+from testla_screenplay import Ability, Actor
 
 
 class UseAPI(Ability):
     """This class represents the actor's ability to use an API."""
 
     def __init__(self, request_context: APIRequestContext):
-        super.__init__()
         self.request_context = request_context
 
     @staticmethod
@@ -79,7 +78,7 @@ class UseAPI(Ability):
         :param mode: the result to check for.
         :returns: true if the status is equal/unequal as expected.
         """
-        expect(response.status == status).to_be(mode == 'equal')
+        assert (response.status == status) == (mode == 'equal')
         return true
     
     def check_body(self, response: Response, body: Dict | str | None, mode: Literal['equal', 'unequal']) -> bool:

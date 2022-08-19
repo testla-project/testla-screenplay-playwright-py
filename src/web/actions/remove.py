@@ -1,12 +1,12 @@
-# from @testla/screenplay import Action, Actor
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
 from typing import Literal
-from abilities.browse_the_web import BrowseTheWeb
+
 
 class Remove(Action):
     """Action Class.  Remove either Session Storage Items or Local Storage Items from the Browser."""
 
-    def __init__(self, mode: Literal['session_storage', 'local_storage'], payload: object):
-        super.__init__()
+    def __init__(self, mode: Literal['session_storage', 'local_storage'], payload: str):
         self.mode = mode
         self.payload = payload
 

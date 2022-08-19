@@ -1,11 +1,11 @@
-# from @testla/screenplay import Action, Actor
-from abilities.browse_the_web import BrowseTheWeb
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
+
 
 class Navigate(Action):
     """Action Class. Navigate to a URL using the specified url string."""
 
     def __init__(self, url: str):
-        super.__init__()
         self.url = url
 
     def perform_as(self, actor: Actor) -> object:

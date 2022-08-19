@@ -1,12 +1,13 @@
-# from @testla/screenplay import Action, Actor
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
 from typing import Literal
-from abilities.browse_the_web import BrowseTheWeb
+
 
 class Wait(Action):
     """Action Class. Wait for either a specified loading state or for a selector to become visible/active."""
 
-    def __init__(self, mode: Literal['selector', 'load_state'], payload: object):
-        super.__init__()
+    def __init__(self, mode: Literal['selector', 'load_state'],
+                 payload: str | Literal['domcontentloaded', 'load', 'networkidle']):
         self.mode = mode
         self.payload = payload
 

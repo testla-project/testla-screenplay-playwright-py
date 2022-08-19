@@ -1,12 +1,12 @@
-# from @testla/screenplay import Action, Actor
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
 from typing import List, Literal
-from abilities.browse_the_web import BrowseTheWeb
+
 
 class Hover(Action):
     """Action Class. Hover over an element specified by a selector string."""
 
     def __init__(self, selector: str, modifiers: List[Literal['Alt', 'Control', 'Meta', 'Shift']] | None = None):
-        super.__init__()
         self.selector = selector
         self.modifiers = modifiers
 

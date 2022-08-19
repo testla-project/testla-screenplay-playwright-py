@@ -1,12 +1,12 @@
-# from @testla/screenplay import Action, Actor
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
 from typing import Literal
-from abilities.browse_the_web import BrowseTheWeb
+
 
 class Set(Action):
     """Action Class. Set either Session Storage Items or Local Storage Items on the Browser."""
 
     def __init__(self, mode: Literal['session_storage', 'local_storage'], payload: object):
-        super.__init__()
         self.mode = mode
         self.payload = payload
 

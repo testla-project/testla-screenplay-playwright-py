@@ -1,12 +1,12 @@
-# from @testla/screenplay import Action, Actor
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
 from typing import List, Literal
-from abilities.browse_the_web import BrowseTheWeb
+
 
 class Get(Action):
     """Action Class. Get either Cookies, Session Storage Items or Local Storage Items from the Browser."""
 
-    def __init__(self, mode: Literal['cookies', 'session_storage', 'local_storage'], payload: object):
-        super.__init__()
+    def __init__(self, mode: Literal['cookies', 'session_storage', 'local_storage'], payload: str | list[str] | None):
         self.mode = mode
         self.payload = payload
 
@@ -17,13 +17,14 @@ class Get(Action):
             return BrowseTheWeb.As(actor).get_session_storage_item(self.payload)
         if self.mode is 'local_storage':
             return BrowseTheWeb.As(actor).get_local_storage_item(self.payload)
-        raise RuntimeError('Error: no match for Get.perform_as()!')
+        else:
+            raise RuntimeError('Error: no match for Get.perform_as()!')
 
     @staticmethod
     def cookies(urls: str | List[str] = None) -> "Get":
         """Get the specified cookies.
 
-        :param urls (optional): If URLs are specified, only cookies that affect those URLs are returned. If no URLs are specified, this all cookies are returned.
+        :param urls: (optional) If URLs are specified, only cookies that affect those URLs are returned. If no URLs are specified, this all cookies are returned.
         """
         return Get('cookies', urls)
 

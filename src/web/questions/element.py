@@ -1,17 +1,15 @@
-# from @testla/screenplay import Actor, Question
+from testla_screenplay import Actor, Question
+from src.web.abilities.browse_the_web import BrowseTheWeb
 from typing import Literal
-from abilities.browse_the_web import BrowseTheWeb
 
 
 class Element(Question):
     """Question Class. Get a specified state for a selector like visible or enabled."""
 
     def __init__(self, check_mode: Literal['to_be', 'not_to_be'], mode: Literal['visible', 'enabled'], selector: str):
-        super.__init__()
         self.check_mode = check_mode
         self.mode = mode
         self.selector = selector
-        
 
     def answered_by(self, actor: Actor) -> bool:
         if self.mode == 'visible':

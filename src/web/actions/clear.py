@@ -1,16 +1,14 @@
-# from @testla/screenplay import Action, Actor
-from ../abilities/BrowseTheWeb import BrowseTheWeb
+from testla_screenplay import Action, Actor
+from src.web.abilities.browse_the_web import BrowseTheWeb
+
 
 class Clear(Action):
     """Action Class. Remove cookies from the Browser."""
 
-    def __init__(self):
-        super.__init__()
-
-    def perform_as(actor: Actor) -> object:
-        return BrowseTheWeb.As(actor).clear_cookies(self.cookies)
+    def perform_as(self, actor: Actor) -> object:
+        return BrowseTheWeb.As(actor).clear_cookies()
 
     @staticmethod
-    def cookies(selector: str) -> "Clear":
+    def cookies() -> "Clear":
         """Clear all browser cookies."""
         return Clear()
