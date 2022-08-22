@@ -1,4 +1,4 @@
-# from @testla/screenplay import Actor
+from testla_screenplay import Actor
 from typing import Dict
 from src.api.actions.abstract_request import ARequest
 from src.api.types import RequestMethod, Response, ResponseBodyFormat
@@ -6,12 +6,11 @@ from src.api.abilities.use_api import UseAPI
 
 
 class Delete(ARequest):
-    """Action Class. Send a HTTP DELETE Request."""
+    """Action Class. Send an HTTP DELETE Request."""
     
     response_body_format = ResponseBodyFormat.JSON
 
     def __init__(self, url: str) -> None:
-        super().__init__()
         self.url = url
 
     def perform_as(self, actor: Actor) -> Response:
@@ -37,7 +36,7 @@ class Delete(ARequest):
     def with_response_body_format(self, response_body_format: ResponseBodyFormat) -> 'Delete':
         """Set the format the response body should be returned as.
         
-        :param responseBodyFormat: the format of the response body.
+        :param response_body_format: the format of the response body.
         """
         self.response_body_format = response_body_format
         return self

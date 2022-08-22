@@ -1,12 +1,14 @@
-# from @testla/screenplay import Actor, Question
+from testla_screenplay import Actor, Question
 from typing import Dict, Literal
 from src.api.abilities.use_api import UseAPI
 from src.api.types import Response as ResponseType
 
+
 class Response(Question):
     """Question Class. Verify certain aspects of an API Response."""
 
-    def __init__(self, check_mode: Literal['has', 'has_not'], mode:  Literal['status', 'body', 'header', 'duration'], response: ResponseType, payload: object):
+    def __init__(self, check_mode: Literal['has', 'has_not'], mode:  Literal['status', 'body', 'header', 'duration'],
+                 response: ResponseType, payload: int | Dict | str | None | Dict[str, str] | float):
         super().__init__()
         self.check_mode = check_mode
         self.mode = mode
@@ -16,13 +18,25 @@ class Response(Question):
     def answered_by(self, actor: Actor) -> bool:
         match self.mode:
             case 'status':
-                return UseAPI.As(actor).check_status(response=self.response, status=self.payload, mode='equal' if self.check_mode == 'has' else 'unequal')
+                if self.check_mode == 'has':
+                    return UseAPI.As(actor).check_status(response=self.response, status=self.payload, mode='equal')
+                else:
+                    return UseAPI.As(actor).check_status(response=self.response, status=self.payload, mode='unequal')
             case 'body':
-                return UseAPI.As(actor).check_body(response=self.response, body=self.payload, mode='equal' if self.check_mode == 'has' else 'unequal')
+                if self.check_mode == 'has':
+                    return UseAPI.As(actor).check_body(response=self.response, body=self.payload, mode='equal')
+                else:
+                    return UseAPI.As(actor).check_body(response=self.response, body=self.payload, mode='unequal')
             case 'header':
-                return UseAPI.As(actor).check_headers(response=self.response, headers=self.payload, mode='included' if self.check_mode == 'has' else 'excluded')
+                if self.check_mode == 'has':
+                    return UseAPI.As(actor).check_headers(response=self.response, headers=self.payload, mode='included')
+                else:
+                    return UseAPI.As(actor).check_headers(response=self.response, headers=self.payload, mode='excluded')
             case 'duration':
-                return UseAPI.As(actor).check_duration(response=self.response, duration=self.payload, mode='less_or_equal' if self.check_mode == 'has' else 'greater')
+                if self.check_mode == 'has':
+                    return UseAPI.As(actor).check_duration(response=self.response, duration=self.payload, mode='less_or_equal')
+                else:
+                    return UseAPI.As(actor).check_duration(response=self.response, duration=self.payload, mode='greater')
             # default case
             case _:
                 raise RuntimeError('Unknown mode for Response.answeredBy')
@@ -83,7 +97,7 @@ class Response(Question):
 
     @staticmethod
     def has_been_received_within(response: ResponseType, duration: float) -> 'Response':
-        """Verify if the reponse (including receiving body) was received within a given duration.
+        """Verify if the response (including receiving body) was received within a given duration.
         
         :param response: the response to check.
         :param duration: expected duration (in seconds) not to be exceeded
@@ -92,7 +106,7 @@ class Response(Question):
 
     @staticmethod
     def has_not_been_received_within(response: ResponseType, duration: float) -> 'Response':
-        """Verify if the reponse (including receiving body) was not received within a given duration.
+        """Verify if the response (including receiving body) was not received within a given duration.
         
         :param response: the response to check.
         :param duration: expected duration (in seconds) to be exceeded

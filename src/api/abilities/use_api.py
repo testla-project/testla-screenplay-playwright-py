@@ -1,6 +1,6 @@
 from time import time
 from typing import Any, Dict, Literal
-from playwright.sync_api import APIRequestContext, APIResponse, expect
+from playwright.sync_api import APIRequestContext, APIResponse
 from sqlalchemy import true
 from src.api.types import RequestMethod, Response, ResponseBodyFormat
 from testla_screenplay import Ability, Actor
@@ -80,7 +80,7 @@ class UseAPI(Ability):
         """
         assert (response.status == status) == (mode == 'equal')
         return true
-    
+
     def check_body(self, response: Response, body: Dict | str | None, mode: Literal['equal', 'unequal']) -> bool:
         """Verify if the given body is equal or unequal to the given response's body.
         
@@ -91,15 +91,15 @@ class UseAPI(Ability):
         """
         if type(response.body) == str and type(body) == str:
             # response body is plain text -> can check for string equality
-            expect(response.body == body).to_be(mode == 'equal')
+            assert (response.body == body) == (mode == 'equal')
             return true
         elif type(response.body) == Dict and type(body) == Dict:
             # response body is in json -> can check with Dict equality
-            expect(response.body == body).to_be(mode == 'equal')
+            assert (response.body == body) == (mode == 'equal')
             return true
         else:
             # response.body and body do not have same type -> bodies are unequal
-            expect(mode == 'unequal').to_be(true)
+            assert (mode == 'unequal')
             return true
 
     def check_headers(self, response: Response, headers: Dict[str, str], mode: Literal['included', 'excluded']) -> bool:
@@ -111,7 +111,7 @@ class UseAPI(Ability):
         :returns: true if the headers are is included/excluded as expected.
         """
         # dict1.items() <= dict2.items() checks if dict1 is a subset of dict2.
-        expect(headers.items() <= response.headers.items()).to_be(mode == 'included')
+        assert (headers.items() <= response.headers.items()) == (mode == 'included')
         return true
 
     def check_duration(self, response: Response, duration: float, mode: Literal['less_or_equal', 'greater']) -> bool:
@@ -122,5 +122,5 @@ class UseAPI(Ability):
         :param mode: the result to check for.
         :returns: true if response was received within given duration, false otherwise.
         """
-        expect(response.duration <= duration).to_be(mode == 'less_or_equal')
+        assert (response.duration <= duration) == (mode == 'less_or_equal')
         return true

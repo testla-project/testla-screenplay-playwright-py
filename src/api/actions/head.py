@@ -1,4 +1,4 @@
-# from @testla/screenplay import Actor
+from testla_screenplay import Actor
 from typing import Dict
 from src.api.actions.abstract_request import ARequest
 from src.api.types import RequestMethod, Response, ResponseBodyFormat

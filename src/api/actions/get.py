@@ -1,4 +1,4 @@
-# from @testla/screenplay import Actor
+from testla_screenplay import Actor
 from typing import Dict
 from src.api.actions.abstract_request import ARequest
 from src.api.types import RequestMethod, Response, ResponseBodyFormat
@@ -37,7 +37,7 @@ class Get(ARequest):
     def with_response_body_format(self, response_body_format: ResponseBodyFormat) -> 'Get':
         """Set the format the response body should be returned as.
         
-        :param responseBodyFormat: the format of the response body.
+        :param response_body_format: the format of the response body.
         """
         self.response_body_format = response_body_format
         return self

@@ -14,10 +14,16 @@ class Element(Question):
     def answered_by(self, actor: Actor) -> bool:
         if self.mode == 'visible':
             # if the ability method is not the expected result there will be an exception
-            return BrowseTheWeb.As(actor).check_visibility_state(self.selector, 'visible' if self.check_mode == 'to_be' else 'hidden')
+            if self.check_mode == 'to_be':
+                return BrowseTheWeb.As(actor).check_visibility_state(selector=self.selector, mode='visible')
+            else:
+                return BrowseTheWeb.As(actor).check_visibility_state(selector=self.selector, mode='hidden')
         if self.mode == 'enabled':
             # if the ability method is not the expected result there will be an exception
-            return BrowseTheWeb.As(actor).check_enabled_state(self.selector, 'enabled' if self.check_mode == 'to_be' else 'disabled')
+            if self.check_mode == 'to_be':
+                return BrowseTheWeb.As(actor).check_enabled_state(selector=self.selector, mode='enabled')
+            else:
+                return BrowseTheWeb.As(actor).check_enabled_state(selector=self.selector, mode='disabled')
         raise RuntimeError('Unknown mode: Element.answered_by')
 
     @staticmethod
@@ -36,7 +42,6 @@ class Element(Question):
         """
         return Element('not_to_be', 'visible', selector)
 
-    
     @staticmethod
     def to_be_enabled(selector: str) -> "Element":
         """Verifies if an element is enabled.
@@ -44,7 +49,6 @@ class Element(Question):
         :param selector: the selector
         """
         return Element('to_be', 'enabled', selector)
-
 
     @staticmethod
     def not_to_be_enabled(selector: str) -> "Element":
