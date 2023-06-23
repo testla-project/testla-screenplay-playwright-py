@@ -183,24 +183,24 @@ def test_session_and_local_storage():
     local_undefined = actor.attempts_to(
         Get.local_storage_item('???'),
     )
-    assert local_undefined == None
+    assert local_undefined is None
 
     # check for values that are not there
     session_undefined = actor.attempts_to(
         Get.session_storage_item('???'),
     )
-    assert session_undefined == None
+    assert session_undefined is None
 
     # remove local storage item and verify that it was deleted
     local_deleted = actor.attempts_to(
         Remove.local_storage_item('localKey'),
         Get.local_storage_item('localKey'),
     )
-    assert local_deleted == None
+    assert local_deleted is None
 
     # remove session storage item and verify that it was deleted
     session_deleted = actor.attempts_to(
         Remove.session_storage_item('localKey'),
         Get.session_storage_item('localKey'),
     )
-    assert session_deleted == None
+    assert session_deleted is None
