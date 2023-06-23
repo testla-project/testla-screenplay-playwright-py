@@ -162,8 +162,8 @@ class BrowseTheWeb(Ability):
             if (value) {
                 return Promise.resolve(JSON.parse(value));
             }
-            return Promise.reject();
-        }""", {'key': key})
+            return Promise.resolve(undefined);
+        }""", key)
 
     def set_local_storage_item(self, key: str, value: object) -> object:
         """Set a local storage item identified by the given key + value, creating a new key/value pair if none existed for key previously.
@@ -184,20 +184,21 @@ class BrowseTheWeb(Ability):
         return self.page.evaluate("""(key) => {
             localStorage.removeItem(key);
             return Promise.resolve();
-        }""", {'key': key})
+        }""", key)
 
     def get_session_storage_item(self, key: str) -> object:
         """Get a session storage item.
         
         :param key: the key that specifies the item.
         """
-        return self.page.evaluate("""(key) => {
+        x = self.page.evaluate("""(key) => {
             const value = sessionStorage.getItem(key);
             if (value) {
                 return Promise.resolve(JSON.parse(value));
             }
-            return Promise.reject();
-        }""", {'key': key})
+            return Promise.resolve(undefined);
+        }""", key)
+        return x
 
     def set_session_storage_item(self, key: str, value: object) -> object:
         """Set a session storage item identified by the given key + value, creating a new key/value pair if none existed for key previously.
@@ -218,4 +219,4 @@ class BrowseTheWeb(Ability):
         return self.page.evaluate("""(key) => {
             sessionStorage.removeItem(key);
             return Promise.resolve();
-        }""", {'key': key})
+        }""", key)
