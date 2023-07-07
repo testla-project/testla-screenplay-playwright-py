@@ -1,6 +1,5 @@
 import pytest
-from typing import List
-from playwright.sync_api import Page, BrowserContext, Cookie, expect
+from playwright.sync_api import Page, expect
 from testla_screenplay import Actor
 from src.web.abilities.browse_the_web import BrowseTheWeb
 from src.web.actions.navigate import Navigate
@@ -10,12 +9,6 @@ from src.web.actions.click import Click
 from src.web.actions.fill import Fill
 from src.web.actions.type import Type
 from src.web.actions.hover import Hover
-from src.web.actions.press import Press
-from src.web.actions.add import Add
-from src.web.actions.get import Get
-from src.web.actions.clear import Clear
-from src.web.actions.set import Set
-from src.web.actions.remove import Remove
 from src.web.actions.wait import Wait
 from src.web.questions.element import Element
 from src.web.types import SelectorOptions, SubSelector, SubSelectorOptions
