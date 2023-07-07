@@ -1,5 +1,5 @@
 from playwright.sync_api import Locator, Page
-from web.types import SubSelector, SelectorOptions
+from web.types import SubSelector, SelectorOptions, Se
 # import { SelectorOptions, SubSelector } from './types';
 
 

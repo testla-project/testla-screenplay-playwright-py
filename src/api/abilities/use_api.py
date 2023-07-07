@@ -115,7 +115,7 @@ class UseAPI(Ability):
         return true
 
     def check_duration(self, response: Response, duration: float, mode: Literal['less_or_equal', 'greater']) -> bool:
-        """Verify if the reponse (including receiving body) was received within a given duration or not.
+        """Verify if the response (including receiving body) was received within a given duration or not.
 
         :param response: the response to check.
         :param duration: expected duration (in milliseconds) not to be exceeded.
