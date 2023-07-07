@@ -133,10 +133,17 @@ class BrowseTheWeb(Ability):
         :param timeout: (optional) maximum timeout to wait for.
         :returns: true if the element is visible/hidden as expected. Throws an error if the timeout was reached.
         """
+        # create dummy timeout if options is None
+        timeout = None if options is None else options.timeout
+
         if mode == 'visible':
-            expect(recursive_locator_lookup(self.page, selector, options)).to_be_visible(timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options=SelectorOptions(
+                options.has_text, options.sub_selector, options.timeout, 'visible')
+            )).to_be_visible(timeout=timeout)
         else:
-            expect(recursive_locator_lookup(self.page, selector, options)).to_be_hidden(timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options=SelectorOptions(
+                options.has_text, options.sub_selector, options.timeout, 'hidden')
+            )).to_be_hidden(timeout=timeout)
         return True
 
     def check_enabled_state(self, selector: Selector, mode: Literal['enabled', 'disabled'], options: SelectorOptions | None = None) -> bool:
@@ -147,10 +154,13 @@ class BrowseTheWeb(Ability):
         :param timeout: (optional) maximum timeout to wait for.
         :returns: true if the element is enabled/disabled as expected. Throws an error if the timeout was reached.
         """
+        # create dummy timeout if options is None
+        timeout = None if options is None else options.timeout
+
         if mode == 'enabled':
-            expect(recursive_locator_lookup(self.page, selector, options)).to_be_enabled(timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_be_enabled(timeout=timeout)
         else:
-            expect(recursive_locator_lookup(self.page, selector, options)).to_be_disabled(timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_be_disabled(timeout=timeout)
         return True
     
     def check_selector_text(self, selector: Selector, text: str | Pattern, mode: Literal['has', 'has_not'], options: SelectorOptions | None = None) -> bool:
@@ -161,10 +171,13 @@ class BrowseTheWeb(Ability):
         :param timeout: (optional) maximum timeout to wait for.
         :returns: true if the element has/has not as expected. Throws an error if the timeout was reached.
         """
+        # create dummy timeout if options is None
+        timeout = None if options is None else options.timeout
+
         if mode == 'has':
-            expect(recursive_locator_lookup(self.page, selector, options)).to_have_text(text, timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_have_text(text, timeout=timeout)
         else:
-            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_text(text, timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_text(text, timeout=timeout)
         return True
     
     def check_selector_value(self, selector: Selector, value: str | Pattern, mode: Literal['has', 'has_not'], options: SelectorOptions | None = None) -> bool:
@@ -175,10 +188,13 @@ class BrowseTheWeb(Ability):
         :param timeout: (optional) maximum timeout to wait for.
         :returns: true if the element has/has not as expected. Throws an error if the timeout was reached.
         """
+        # create dummy timeout if options is None
+        timeout = None if options is None else options.timeout
+
         if mode == 'has':
-            expect(recursive_locator_lookup(self.page, selector, options)).to_have_value(value, timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_have_value(value, timeout=timeout)
         else:
-            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_value(value, timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_value(value, timeout=timeout)
         return True
 
     def get_cookies(self, urls: str | List[str] = None) -> List[Cookie]:
