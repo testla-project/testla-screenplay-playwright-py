@@ -14,9 +14,9 @@ class Set(Action):
         # payload should consist of only one entry: { key: value } 
         key = [*self.payload][0]
         value = self.payload[key]
-        if self.mode is 'session_storage':
+        if self.mode == 'session_storage':
             return BrowseTheWeb.As(actor).set_session_storage_item(key, value)
-        if self.mode is 'local_storage':
+        if self.mode == 'local_storage':
             return BrowseTheWeb.As(actor).set_local_storage_item(key, value)
         raise RuntimeError('Error: no match for Remove.perform_as()!')
 

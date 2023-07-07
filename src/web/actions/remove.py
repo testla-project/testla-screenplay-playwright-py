@@ -11,9 +11,9 @@ class Remove(Action):
         self.payload = payload
 
     def perform_as(self, actor: Actor) -> None:
-        if self.mode is 'session_storage':
+        if self.mode == 'session_storage':
             return BrowseTheWeb.As(actor).remove_session_storage_item(self.payload)
-        if self.mode is 'local_storage':
+        if self.mode == 'local_storage':
             return BrowseTheWeb.As(actor).remove_local_storage_item(self.payload)
         raise RuntimeError('Error: no match for Remove.perform_as()!')
 

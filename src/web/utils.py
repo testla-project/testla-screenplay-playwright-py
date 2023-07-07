@@ -1,8 +1,8 @@
 from typing import Pattern
 from playwright.sync_api import Locator, Page
-from src.web.types import SelectorOptionsState, SubSelector, SelectorOptions
+from src.web.types import Selector, SelectorOptionsState, SubSelector, SelectorOptions
 
-def get_sublocator(locator: Locator, sub_locator: Locator, text: str | Pattern[str] | None = None) -> Locator:
+def get_sublocator(locator: Locator, sub_locator: Locator, text: str | Pattern | None = None) -> Locator:
     """Dealing with selector == Playwright Locator and options.hasText"""
     return locator.filter(has=sub_locator, has_text=text)
 
@@ -32,7 +32,7 @@ def sub_locator_lookup(page: Page, locator: Locator, timeout: float | None = Non
     return resolved_locator
 
 
-def recursive_locator_lookup(page: Page, selector: str, options: SelectorOptions | None = None) -> Locator:
+def recursive_locator_lookup(page: Page, selector: Selector, options: SelectorOptions | None = None) -> Locator:
     """Find the given locator with the given SelectorOptions."""
     # check if this method was called with options == None.
     # if this is really the case, just resolve the locator, wait for it to be visible and return it.

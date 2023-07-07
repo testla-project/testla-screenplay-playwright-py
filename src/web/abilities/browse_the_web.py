@@ -1,3 +1,4 @@
+from re import Pattern
 from typing import List, Literal
 from playwright.sync_api import Cookie, Page, Response, expect
 from testla_screenplay import Actor, Ability
@@ -152,7 +153,7 @@ class BrowseTheWeb(Ability):
             expect(recursive_locator_lookup(self.page, selector, options)).to_be_disabled(timeout=options.timeout)
         return True
     
-    def check_selector_text(self, selector: Selector, mode: Literal['has', 'has_not'], options: SelectorOptions | None = None) -> bool:
+    def check_selector_text(self, selector: Selector, text: str | Pattern, mode: Literal['has', 'has_not'], options: SelectorOptions | None = None) -> bool:
         """Validate if the given element has the given text or not.
         
         :param mode: the expected property of the selector that needs to be checked. Either 'has' or 'has_not'.
@@ -161,12 +162,12 @@ class BrowseTheWeb(Ability):
         :returns: true if the element has/has not as expected. Throws an error if the timeout was reached.
         """
         if mode == 'has':
-            expect(recursive_locator_lookup(self.page, selector, options)).to_have_text(timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_have_text(text, timeout=options.timeout)
         else:
-            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_text(timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_text(text, timeout=options.timeout)
         return True
     
-    def check_selector_value(self, selector: Selector, mode: Literal['has', 'has_not'], options: SelectorOptions | None = None) -> bool:
+    def check_selector_value(self, selector: Selector, value: str | Pattern, mode: Literal['has', 'has_not'], options: SelectorOptions | None = None) -> bool:
         """Validate if the given element has the given value or not.
         
         :param mode: the expected property of the selector that needs to be checked. Either 'has' or 'has_not'.
@@ -175,9 +176,9 @@ class BrowseTheWeb(Ability):
         :returns: true if the element has/has not as expected. Throws an error if the timeout was reached.
         """
         if mode == 'has':
-            expect(recursive_locator_lookup(self.page, selector, options)).to_have_value(timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_have_value(value, timeout=options.timeout)
         else:
-            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_value(timeout=options.timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_value(value, timeout=options.timeout)
         return True
 
     def get_cookies(self, urls: str | List[str] = None) -> List[Cookie]:

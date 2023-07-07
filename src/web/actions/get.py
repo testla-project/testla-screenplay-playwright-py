@@ -11,11 +11,11 @@ class Get(Action):
         self.payload = payload
 
     def perform_as(self, actor: Actor) -> object:
-        if self.mode is 'cookies':
+        if self.mode == 'cookies':
             return BrowseTheWeb.As(actor).get_cookies(self.payload)
-        if self.mode is 'session_storage':
+        if self.mode == 'session_storage':
             return BrowseTheWeb.As(actor).get_session_storage_item(self.payload)
-        if self.mode is 'local_storage':
+        if self.mode == 'local_storage':
             return BrowseTheWeb.As(actor).get_local_storage_item(self.payload)
         else:
             raise RuntimeError('Error: no match for Get.perform_as()!')

@@ -16,7 +16,7 @@ class DragAndDrop(Action):
         return BrowseTheWeb.As(actor).drag_and_drop(self.source_selector, self.target_selector, source_options=self.source_options, target_options=self.target_options)
 
     @staticmethod
-    def execute(source_selector: str, target_selector: str, source_options: SelectorOptions | None = None, target_options: SelectorOptions | None = None ) -> "DragAndDrop":
+    def execute(source_selector: Selector, target_selector: Selector, source_options: SelectorOptions | None = None, target_options: SelectorOptions | None = None ) -> "DragAndDrop":
         """Drag the specified source element to the specified target element and drop it.
 
         :param source_selector: the selector of the source element.

@@ -1,3 +1,4 @@
+from re import Pattern
 from typing import Literal, NewType, Union
 from playwright.sync_api import Locator
 
@@ -10,15 +11,12 @@ class SubSelector:
     options: dict | None = {
         "has_text": str | None, 
         "timeout": float | None,
-        # "sub_selector": "SubSelector" | None,
         "sub_selector": object | None,
         "state": SelectorOptionsState | None,
     }
 
 class SelectorOptions:
-    has_text: str | None
+    has_text: str | Pattern | None
     sub_selector: SubSelector | None
     timeout: float | None
     state: SelectorOptionsState | None
-
-# SubSelector.options["sub_selector"] = None
