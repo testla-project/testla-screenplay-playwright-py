@@ -11,7 +11,7 @@ class Check(Action):
         self.options = options
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).check_box(self.selector, self.options)
+        return BrowseTheWeb.As(actor).check_box(self.selector, options=self.options)
 
     @staticmethod
     def element(selector: Selector, options: SelectorOptions | None = None) -> "Check":
@@ -19,4 +19,4 @@ class Check(Action):
 
         :param selector the string representing the selector.
         """
-        return Check(selector, options)
+        return Check(selector, options=options)

@@ -11,7 +11,7 @@ class Add(Action):
         self.cookies = cookies
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).add_cookies(self.cookies)
+        return BrowseTheWeb.As(actor).add_cookies(cookies=self.cookies)
 
     @staticmethod
     def cookies(cookies: List[Cookie]) -> "Add":
@@ -19,4 +19,4 @@ class Add(Action):
         
         :param cookies: the cookies to add.
         """
-        return Add(cookies)
+        return Add(cookies=cookies)

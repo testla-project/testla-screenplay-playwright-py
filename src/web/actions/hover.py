@@ -13,7 +13,7 @@ class Hover(Action):
         self.modifiers = modifiers
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).hover(self.selector, self.options, self.modifiers)
+        return BrowseTheWeb.As(actor).hover(self.selector, options=self.options, modifiers=self.modifiers)
 
     @staticmethod
     def over(selector: Selector, options: SelectorOptions | None = None, modifiers: List[Literal['Alt', 'Control', 'Meta', 'Shift']] | None = None) -> "Hover":
@@ -22,4 +22,4 @@ class Hover(Action):
         :param selector: the selector.
         :param modifiers: Modifier keys to press. Ensures that (only) these modifiers are pressed during the operation.
         """
-        return Hover(selector, options, modifiers)
+        return Hover(selector, options=options, modifiers=modifiers)

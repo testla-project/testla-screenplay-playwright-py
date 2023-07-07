@@ -11,7 +11,7 @@ class Click(Action):
         self.options = options
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).click(self.selector, self.options)
+        return BrowseTheWeb.As(actor).click(self.selector, options=self.options)
 
     @staticmethod
     def on(selector: Selector, options: SelectorOptions | None = None) -> "Click":
@@ -19,4 +19,4 @@ class Click(Action):
 
         :param selector: the string representing the selector.
         """
-        return Click(selector, options)
+        return Click(selector, options=options)

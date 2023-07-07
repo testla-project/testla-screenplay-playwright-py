@@ -12,7 +12,7 @@ class Type(Action):
         self.options = options
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).type(self.selector, self.inp, self.options)
+        return BrowseTheWeb.As(actor).type(self.selector, self.inp, options=self.options)
 
     @staticmethod
     def In(selector: Selector, inp: str, options: SelectorOptions | None = None) -> "Type":
@@ -21,4 +21,4 @@ class Type(Action):
         :param selector: the selector.
         :param inp: the input.
         """
-        return Type(selector, inp, options)
+        return Type(selector, inp, options=options)

@@ -13,7 +13,7 @@ class DragAndDrop(Action):
         self.target_options = target_options
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).drag_and_drop(self.source_selector, self.target_selector, self.source_options, self.target_options)
+        return BrowseTheWeb.As(actor).drag_and_drop(self.source_selector, self.target_selector, source_options=self.source_options, target_options=self.target_options)
 
     @staticmethod
     def execute(source_selector: str, target_selector: str, source_options: SelectorOptions | None = None, target_options: SelectorOptions | None = None ) -> "DragAndDrop":
@@ -22,4 +22,4 @@ class DragAndDrop(Action):
         :param source_selector: the selector of the source element.
         :param target_selector: the selector of the target element.
         """
-        return DragAndDrop(source_selector, target_selector, source_options, target_options)
+        return DragAndDrop(source_selector, target_selector, source_options=source_options, target_options=target_options)

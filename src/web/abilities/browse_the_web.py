@@ -1,6 +1,8 @@
-from typing import List, Literal, Optional
+from typing import List, Literal
 from playwright.sync_api import Cookie, Page, Response, expect
 from testla_screenplay import Actor, Ability
+from src.web.types import Selector, SelectorOptions
+from src.web.utils import recursive_locator_lookup
 
 
 class BrowseTheWeb(Ability):
@@ -42,13 +44,13 @@ class BrowseTheWeb(Ability):
         """
         return self.page.wait_for_load_state(state)
 
-    def hover(self, selector: str, modifiers: List[Literal['Alt', 'Control', 'Meta', 'Shift']] | None = None) -> None:
+    def hover(self, selector: Selector, options: SelectorOptions | None = None, modifiers: List[Literal['Alt', 'Control', 'Meta', 'Shift']] | None = None) -> None:
         """Use the page mouse to hover over the specified element.
 
         :param selector: the selector of the element to hover over.
         :param modifiers: (optional) the keys that should be pressed while hovering. Supported: 'Alt', 'Control', 'Meta', 'Shift'.
         """
-        return self.page.hover(selector, modifiers=modifiers)
+        return recursive_locator_lookup(page=self.page, selector=selector, options=options).hover(modifiers=modifiers)
 
     def press(self, keys: str) -> None:
         """Press the specified key(s) on the keyboard.
@@ -57,60 +59,72 @@ class BrowseTheWeb(Ability):
         """
         return self.page.keyboard.press(keys)
 
-    def check_box(self, selector: str) -> None:
+    def check_box(self, selector: Selector, options: SelectorOptions | None = None) -> None:
         """Check the specified checkbox.
 
         :param selector: the selector of the checkbox.
         """
-        return self.page.check(selector)
+        return recursive_locator_lookup(page=self.page, selector=selector, options=options).check()
 
-    def wait_for_selector(self, selector: str):
+    def wait_for_selector(self, selector: Selector, options: SelectorOptions | None = None):
         """Wait until the element of the specified selector exists.
         
         :param selector: the selector of the element.
         """
-        return self.page.locator(selector)
+        return recursive_locator_lookup(self.page, selector, options)
 
-    def drag_and_drop(self, source_selector: str, target_selector: str) -> None:
+    def drag_and_drop(self, source_selector: Selector, target_selector: Selector, source_options: SelectorOptions | None = None, target_options: SelectorOptions | None = None) -> None:
         """Drag the specified source element to the specified target element and drop it.
 
         :param source_selector: the selector of the source element.
         :param target_selector: the selector of the target element.
         """
-        return self.page.drag_and_drop(source_selector, target_selector)
+        print(source_options)
+        print(target_options)
+        target = recursive_locator_lookup(self.page, target_selector, target_options)
+        return recursive_locator_lookup(self.page, source_selector, source_options).drag_to(target=target, target_position={"x": 0, "y": 0})
 
-    def fill(self, selector: str, inp: str) -> None:
+    def fill(self, selector: Selector, inp: str, options: SelectorOptions | None = None) -> None:
         """Fill the element specified by the selector with the given input.
         
         :param selector: the selector of the element.
         :param inp: the input to fill the element with.
         """
-        return self.page.fill(selector, inp)
+        return recursive_locator_lookup(self.page, selector, options).fill(inp)
 
-    def type(self, selector: str, inp: str) -> None:
+    def type(self, selector: Selector, inp: str, options: SelectorOptions | None = None) -> None:
         """Type the given input into the element specified by the selector.
         
         :param selector: the selector of the element.
         :param inp: the input to fill the element with.
         """
-        return self.page.type(selector, inp)
+        return recursive_locator_lookup(self.page, selector, options).type(inp)
 
-    def click(self, selector: str) -> None:
+    def click(self, selector: Selector, options: SelectorOptions | None = None) -> None:
         """Click the element specified by the selector.
 
         :param selector: the selector of the element to click.
         """
-        return self.page.click(selector)
+        return recursive_locator_lookup(self.page, selector, options).click()
 
-    def dblclick(self, selector: str) -> None:
+    def dblclick(self, selector: Selector, options: SelectorOptions | None = None) -> None:
         """Double click the element specified by the selector.
 
         :param selector: the selector of the element to double click.
         """
-        return self.page.dblclick(selector)
+        return recursive_locator_lookup(self.page, selector, options).dblclick()
+    
+    def select_option(self, selector: Selector, value: str | None = None, *, label: str | None = None, index: int | None = None, options: SelectorOptions | None = None) -> List[str]:
+        """Set the value of a Selector of type select to the given option.
+        
+        :param selector: selector the string representing the (select) selector.
+        :param value: the value of the option. Default if none of the other parameters is specified.
+        :param label: the label of the option. Has to be specified explicitly.
+        :param index: the index of the option. Has to be specified explicitly.
+        """
+        return recursive_locator_lookup(self.page, selector, options).select_option(value=value, label=label, index=index)
 
-    def check_visibility_state(self, selector: str, mode: Literal['visible', 'hidden'],
-                               timeout: Optional[float] = None) -> bool:
+    def check_visibility_state(self, selector: Selector, mode: Literal['visible', 'hidden'], options: SelectorOptions | None = None) -> bool:
         """Validate if a locator on the page is visible or hidden.
         
         :param mode: the expected property of the selector that needs to be checked. either 'visible' or 'hidden'.
@@ -119,13 +133,12 @@ class BrowseTheWeb(Ability):
         :returns: true if the element is visible/hidden as expected. Throws an error if the timeout was reached.
         """
         if mode == 'visible':
-            expect(self.page.locator(selector)).to_be_visible(timeout=timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_be_visible(timeout=options.timeout)
         else:
-            expect(self.page.locator(selector)).to_be_hidden(timeout=timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_be_hidden(timeout=options.timeout)
         return True
 
-    def check_enabled_state(self, selector: str, mode: Literal['enabled', 'disabled'],
-                            timeout: Optional[float] = None) -> bool:
+    def check_enabled_state(self, selector: Selector, mode: Literal['enabled', 'disabled'], options: SelectorOptions | None = None) -> bool:
         """Validate if a locator on the page is enabled or disabled.
         
         :param mode: the expected property of the selector that needs to be checked. Either 'enabled' or 'disabled'.
@@ -134,9 +147,37 @@ class BrowseTheWeb(Ability):
         :returns: true if the element is enabled/disabled as expected. Throws an error if the timeout was reached.
         """
         if mode == 'enabled':
-            expect(self.page.locator(selector)).to_be_enabled(timeout=timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_be_enabled(timeout=options.timeout)
         else:
-            expect(self.page.locator(selector)).to_be_disabled(timeout=timeout)
+            expect(recursive_locator_lookup(self.page, selector, options)).to_be_disabled(timeout=options.timeout)
+        return True
+    
+    def check_selector_text(self, selector: Selector, mode: Literal['has', 'has_not'], options: SelectorOptions | None = None) -> bool:
+        """Validate if the given element has the given text or not.
+        
+        :param mode: the expected property of the selector that needs to be checked. Either 'has' or 'has_not'.
+        :param selector: the locator to check for.
+        :param timeout: (optional) maximum timeout to wait for.
+        :returns: true if the element has/has not as expected. Throws an error if the timeout was reached.
+        """
+        if mode == 'has':
+            expect(recursive_locator_lookup(self.page, selector, options)).to_have_text(timeout=options.timeout)
+        else:
+            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_text(timeout=options.timeout)
+        return True
+    
+    def check_selector_value(self, selector: Selector, mode: Literal['has', 'has_not'], options: SelectorOptions | None = None) -> bool:
+        """Validate if the given element has the given value or not.
+        
+        :param mode: the expected property of the selector that needs to be checked. Either 'has' or 'has_not'.
+        :param selector: the locator to check for.
+        :param timeout: (optional) maximum timeout to wait for.
+        :returns: true if the element has/has not as expected. Throws an error if the timeout was reached.
+        """
+        if mode == 'has':
+            expect(recursive_locator_lookup(self.page, selector, options)).to_have_value(timeout=options.timeout)
+        else:
+            expect(recursive_locator_lookup(self.page, selector, options)).not_to_have_value(timeout=options.timeout)
         return True
 
     def get_cookies(self, urls: str | List[str] = None) -> List[Cookie]:

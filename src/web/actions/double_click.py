@@ -11,7 +11,7 @@ class DoubleClick(Action):
         self.options = options
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).dblclick(self.selector, self.options)
+        return BrowseTheWeb.As(actor).dblclick(self.selector, options=self.options)
 
     @staticmethod
     def on(selector: Selector, options: SelectorOptions | None = None) -> "DoubleClick":
@@ -19,4 +19,4 @@ class DoubleClick(Action):
 
         :param selector: the string representing the selector.
         """
-        return DoubleClick(selector, options)
+        return DoubleClick(selector, options=options)

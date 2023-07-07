@@ -12,7 +12,7 @@ class Fill(Action):
         self.options = options
 
     def perform_as(self, actor: Actor) -> None:
-        return BrowseTheWeb.As(actor).fill(self.selector, self.inp, self.options)
+        return BrowseTheWeb.As(actor).fill(self.selector, self.inp, options=self.options)
 
     @staticmethod
     def In(selector: Selector, inp: str, options: SelectorOptions | None = None) -> "Fill":
@@ -21,4 +21,4 @@ class Fill(Action):
         :param selector: the selector.
         :param inp: the input.
         """
-        return Fill(selector, inp, options)
+        return Fill(selector, inp, options=options)
