@@ -1,0 +1,2 @@
+testla_screenplay == 1.0.0
+-i https://testpypi.python.org/pypi
