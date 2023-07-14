@@ -80,8 +80,6 @@ class BrowseTheWeb(Ability):
         :param source_selector: the selector of the source element.
         :param target_selector: the selector of the target element.
         """
-        print(source_options)
-        print(target_options)
         target = recursive_locator_lookup(self.page, target_selector, target_options)
         return recursive_locator_lookup(self.page, source_selector, source_options).drag_to(target=target, target_position={"x": 0, "y": 0})
 
