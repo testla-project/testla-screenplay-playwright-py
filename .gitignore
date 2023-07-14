@@ -8,3 +8,4 @@ setup.cfg
 pyproject.toml
 build/
 .env
+/src/testla_screenplay_playwright.egg-info

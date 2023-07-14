@@ -2,15 +2,14 @@ import pytest
 from playwright.sync_api import Playwright
 from testla_screenplay import Actor
 
-from src.api.abilities.use_api import UseAPI
-from src.api.actions.delete import Delete
-from src.api.actions.get import Get
-from src.api.actions.head import Head
-from src.api.actions.patch import Patch
-from src.api.actions.post import Post
-from src.api.actions.put import Put
-from src.api.types import Response, ResponseBodyFormat
-
+from src.testla_screenplay_playwright.api.abilities.use_api import UseAPI
+from src.testla_screenplay_playwright.api.actions.delete import Delete
+from src.testla_screenplay_playwright.api.actions.get import Get
+from src.testla_screenplay_playwright.api.actions.head import Head
+from src.testla_screenplay_playwright.api.actions.patch import Patch
+from src.testla_screenplay_playwright.api.actions.post import Post
+from src.testla_screenplay_playwright.api.actions.put import Put
+from src.testla_screenplay_playwright.api.types import Response, ResponseBodyFormat
 
 
 # execute tests with: pytest <file> --headed
