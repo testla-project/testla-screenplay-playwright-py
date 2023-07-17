@@ -1,17 +1,17 @@
 import pytest
 from playwright.sync_api import Page, expect
 from testla_screenplay import Actor
-from src.web.abilities.browse_the_web import BrowseTheWeb
-from src.web.actions.navigate import Navigate
-from src.web.actions.drag_and_drop import DragAndDrop
-from src.web.actions.check import Check
-from src.web.actions.click import Click
-from src.web.actions.fill import Fill
-from src.web.actions.type import Type
-from src.web.actions.hover import Hover
-from src.web.actions.wait import Wait
-from src.web.questions.element import Element
-from src.web.types import SelectorOptions, SubSelector, SubSelectorOptions
+from src.testla_screenplay_playwright.web.abilities.browse_the_web import BrowseTheWeb
+from src.testla_screenplay_playwright.web.actions.navigate import Navigate
+from src.testla_screenplay_playwright.web.actions.drag_and_drop import DragAndDrop
+from src.testla_screenplay_playwright.web.actions.check import Check
+from src.testla_screenplay_playwright.web.actions.click import Click
+from src.testla_screenplay_playwright.web.actions.fill import Fill
+from src.testla_screenplay_playwright.web.actions.type import Type
+from src.testla_screenplay_playwright.web.actions.hover import Hover
+from src.testla_screenplay_playwright.web.actions.wait import Wait
+from src.testla_screenplay_playwright.web.questions.element import Element
+from src.testla_screenplay_playwright.web.types import SelectorOptions, SubSelector, SubSelectorOptions
 
 
 # execute tests with: pytest <file> --headed

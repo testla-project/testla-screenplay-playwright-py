@@ -2,23 +2,23 @@ import pytest
 from typing import List
 from playwright.sync_api import Page, BrowserContext, Cookie, expect
 from testla_screenplay import Actor
-from src.web.abilities.browse_the_web import BrowseTheWeb
-from src.web.actions.navigate import Navigate
-from src.web.actions.drag_and_drop import DragAndDrop
-from src.web.actions.check import Check
-from src.web.actions.click import Click
-from src.web.actions.fill import Fill
-from src.web.actions.type import Type
-from src.web.actions.hover import Hover
-from src.web.actions.press import Press
-from src.web.actions.add import Add
-from src.web.actions.get import Get
-from src.web.actions.clear import Clear
-from src.web.actions.set import Set
-from src.web.actions.remove import Remove
-from src.web.actions.wait import Wait
-from src.web.questions.element import Element
-from src.web.types import SelectorOptions, SubSelector, SubSelectorOptions
+from src.testla_screenplay_playwright.web.abilities.browse_the_web import BrowseTheWeb
+from src.testla_screenplay_playwright.web.actions.navigate import Navigate
+from src.testla_screenplay_playwright.web.actions.drag_and_drop import DragAndDrop
+from src.testla_screenplay_playwright.web.actions.check import Check
+from src.testla_screenplay_playwright.web.actions.click import Click
+from src.testla_screenplay_playwright.web.actions.fill import Fill
+from src.testla_screenplay_playwright.web.actions.type import Type
+from src.testla_screenplay_playwright.web.actions.hover import Hover
+from src.testla_screenplay_playwright.web.actions.press import Press
+from src.testla_screenplay_playwright.web.actions.add import Add
+from src.testla_screenplay_playwright.web.actions.get import Get
+from src.testla_screenplay_playwright.web.actions.clear import Clear
+from src.testla_screenplay_playwright.web.actions.set import Set
+from src.testla_screenplay_playwright.web.actions.remove import Remove
+from src.testla_screenplay_playwright.web.actions.wait import Wait
+from src.testla_screenplay_playwright.web.questions.element import Element
+from src.testla_screenplay_playwright.web.types import SelectorOptions, SubSelector, SubSelectorOptions
 
 
 # execute tests with: pytest <file> --headed
