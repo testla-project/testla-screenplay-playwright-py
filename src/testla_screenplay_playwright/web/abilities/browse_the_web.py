@@ -131,17 +131,17 @@ class BrowseTheWeb(Ability):
         :param timeout: (optional) maximum timeout to wait for.
         :returns: true if the element is visible/hidden as expected. Throws an error if the timeout was reached.
         """
-        # create dummy timeout if options is None
-        timeout = None if options is None else options.timeout
+        # create dummy options if options is None
+        options = SelectorOptions() if options is None else options
 
         if mode == 'visible':
             expect(recursive_locator_lookup(self.page, selector, options=SelectorOptions(
                 options.has_text, options.sub_selector, options.timeout, 'visible')
-            )).to_be_visible(timeout=timeout)
+            )).to_be_visible(timeout=options.timeout)
         else:
             expect(recursive_locator_lookup(self.page, selector, options=SelectorOptions(
                 options.has_text, options.sub_selector, options.timeout, 'hidden')
-            )).to_be_hidden(timeout=timeout)
+            )).to_be_hidden(timeout=options.timeout)
         return True
 
     def check_enabled_state(self, selector: Selector, mode: Literal['enabled', 'disabled'], options: SelectorOptions | None = None) -> bool:
